@@ -15,7 +15,7 @@ def sum_trick(trick):
     nums = []
     phoenix = False
     for play in trick:
-        if play == '-':
+        if play == '-' or play == 'x':
             continue
         for card in play:
             if card == '1':
@@ -47,7 +47,7 @@ def sum_trick(trick):
     else:
         return num2char(summod(nums))
 
-def validate_round(round):
+def validate_round(round, debug=False, verify=False):
     card_counts = {
         '2': 4,
         '3': 4,
@@ -74,14 +74,31 @@ def validate_round(round):
         3: [],
     }
 
-    player = 0
+    player = -1
+    winners = []
 
-    for trick in round:
+    def expect_true(pred, message):
+        if verify:
+            assert pred, message
+        else:
+            if not pred:
+                print("ERROR: ", message)
+
+    for i, trick in enumerate(round):
+        if debug:
+            print('  Trick', i)
         passes = 0
         expect_done = False
+        dog = False
         for play in trick:
+            player = (player + 1) % 4
+            expect_true(
+                (len(hands[player]) == 14) == (play == 'x'),
+                "Player should play x only when done: %s %s %s" % (player, play, hands[player])
+            )
+            expect_true(not expect_done, "Round over?!")
             assert not expect_done
-            if play == '-':
+            if play == '-' or play == 'x':
                 passes += 1
                 if passes == 3:
                     expect_done = True
@@ -90,17 +107,32 @@ def validate_round(round):
                 for card in play:
                     hands[player].append(card)
                     card_counts[card] -= 1
-                    # assert card_counts[card] >= 0, "Too many %s" % card
-                    if card_counts[card] < 0: 
-                        print("Too many %s" % card)
+                    expect_true(
+                        card_counts[card] >= 0, 
+                        "Too many %s" % card
+                    )
                     if card == 'd':
                         assert len(trick) == 1
                         expect_done = True
-                        player = (player + 1) % 4
-            player = (player + 1) % 4
+                        dog = True
+            if debug:
+                if play != '-':
+                    print('    Player', player, 'played', play)
+                # print('  Remaining hand: ', sorted(hands[player]))
+            if dog:
+                player = (player + 2) % 4
         assert expect_done
-    print('\nHands were\n ', '\n  '.join(['%d: %s' % (player, ''.join(sorted(hand))) for (player, hand) in hands.items()]))
-    print('Cards remain: ', ''.join(['%s: %d, ' % (card, count) for (card, count) in card_counts.items() if count > 0]))
+        winners.append(player)
+    print()
+    print('Winners were', winners)
+    print('Hands were')
+    for (player, hand) in hands.items():
+        hand = list(hand)
+        while len(hand) < 14:
+            hand.append('.')
+        print('%d: %s' % (player, ''.join(sorted(hand))))
+        assert len(hand) <= 14, "Hand too large!"
+    print('Cards remain: ', ''.join([card * count for (card, count) in card_counts.items()]))
     # assert expect_done
 res = sys.argv[1]
 nums = [char2num(char) for char in res]
@@ -108,16 +140,24 @@ nums = [char2num(char) for char in res]
 
 PASS = 0
 rounds = [
-    [ # TEACH US OF LIFE
+    [ # TEACH US
         ['1', '6', 'Q',  'A', '-', '-', '-'],
         ['22', '88', 'KK', '-', '-', '-'],
-        ['23', '6', 'Q',  'A', '-', '-', '-'],
+        ['2', '3', '6', 'Q',  'A', '-', '-', '-'],
     ],
-    [ # HUSBAND AND WIFE
+    # OF LIFE
+    [ # HUSBAND 
         ['123456', '-', '-', '456789', '-', '-', '-'],
-        ['222JJ', '-', '-', 'KKK33', '-', '-', '-'],
-        ['3', '4', 'Q', 'A', 'D', '-', '-', '-'],
+        ['22299', '-', '-', 'JJJ88', '-', '-', '-'],
+        ['3', '6', '9', 'A', '-', '-', '-'],
+        ['7', '9', '-', 'J', '-', 'A', '-', '-', '-'],
+        ['7', 'Q', '-', '-', '-']
+        # ['5566', '-' ,'-', 'TTQQ', '-', '-', '-'],
+        # ['4', 'T', 'K', 'A', '-', '-', '-'],
+        # ['8899', '-', '-', 'QQQQ',  '-', '-', '-'],
+        # ['d'],
     ],
+    # AND WIFE
 ]
 
 for round in rounds:
@@ -127,15 +167,28 @@ for round in rounds:
         sum_trick(trick) for trick in round
     ))
 
+validate_round(rounds[1], True)
 
 print()
 poem = [
-    'teach us of life',
+    'teach us, in life',
+     # 'to be'
     'lucky and skilled',      # mahjong, sword
+     # 'to be'
     'smart and good willed',  # dog, star
+     # 'to be'
     'husband and wife',       # phoenix, pagoda
-    'grand bets fulfilled', # dragon, jade
+     # 'to have'
+    'grand bets fulfilled',   # dragon, jade
 ]
 for line in poem:
     print(line)
     print(' '.join(str(char2num(x)) for x in line))
+
+"""
+                 TEACH US          IN LIFE,
+to have been     _____ ___         _______,     200-0
+to be            _____ ___     ____-______,     400-0
+to become        _______          ___ ____,     600-0
+to have          _____ ____      _________.    1000-0
+"""
