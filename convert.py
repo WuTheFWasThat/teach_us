@@ -140,20 +140,24 @@ def validate_round(round, clues=None, debug=False, verify=False):
         (part1, part2) = clues
         phrase = ''
         for clue in part1.split(' '):
-            index = int(clue[1:])
-            print('index', index)
+            assert clue[1] == '.' 
+            index = int(clue[2:]) - 1
             if clue[0] == '1':
+                # print('card', hands[winner][index])
                 phrase += num2char(card2num(hands[winner][index]))
             else:
-                print('card', hands[(winner + 2) % 4][index])
+                # print('card', hands[(winner + 2) % 4][index])
                 phrase += num2char(13 + card2num(hands[(winner + 2) % 4][index]))
 
-        phrase += ':'
+        phrase += '.'
         for clue in part2.split(' '):
-            index = int(clue[1:])
+            assert clue[1] == '.' 
+            index = int(clue[2:]) - 1
             if clue[0] == '1':
+                # print('card', hands[(winner + 2) % 4][index])
                 phrase += num2char(card2num(hands[(winner + 2) % 4][index]))
             else:
+                # print('card', hands[winner][index])
                 phrase += num2char(13 + card2num(hands[winner][index]))
         print('Clued phrase: ', phrase)
 
@@ -161,38 +165,32 @@ res = sys.argv[1]
 nums = [char2num(char) for char in res]
 # print(num2char(summod(nums)))
 
-PASS = 0
-rounds = [
-    [ # TEACH US, IN LIFE
-      # 1: 13456789TTQAAD (358AA)
-      # 2: 355668899TTJdP
-      # 3: 223356789KKKKQ (56789Q)
-      # 4: 2244477QQJJJAA
-      '3456789',
-      '1 3 Q',
-      '2233 JJQQ',
-      '44477',
-      '22 TT - - AA - - KKKK',
-      '56789',
-      'x J A P x x D',
-      'A',
-      'Q',
-    ],
+# TEACH US, IN LIFE
+# 1: 13456789TTQQAD (56789Q)
+# 2: 355668899TTJdP
+# 3: 223356789KKKKA (358AA)
+# 4: 2244477QQJJJAA
+round1 = [ 
+  '3456789',
+  '1 3 A',
+  '2233 JJQQ',
+  '44422',
+  '77 TT - - AA - - KKKK',
+  '56789',
+  'x J A P x x D',
+  'QQ',
+]
+
+clues1 = (
+    '2.5 1.10 1.1 1.4 1.13 2.6 2.4',
+    '1.7 2.1 1.14 1.7 1.4 1.3'
+)
     # LUCKY AND SKILLED
     # 1: (Q3J6)
     # 3: 
     # AND WIFE
-]
 
-all_clues = [
-    (
-        '212',
-        '212',
-     )
-]
-
-for round, clues in zip(rounds, all_clues):
-    validate_round(round, clues=clues, debug=True)
+validate_round(round1, clues=clues1, debug=True)
 
 
 print()
