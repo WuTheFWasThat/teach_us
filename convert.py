@@ -81,11 +81,12 @@ def validate_round(round, clues=None, debug=False, verify=False):
         for j, play in enumerate(trick.split(' ')):
             if j != 0:
                 player = (player + 1) % 4
-            expect_true(
-                (len(hands[player]) == 14) == (play == 'x'),
-                "Player %d should play x only when done: %s %s" % (player, play, ''.join(sorted(hands[player])))
-            )
-            if play == '-' or play == 'x':
+            if len(hands[player]) == 14: 
+                expect_true(
+                    play == '-',
+                    "Player %d should pass when done: %s %s" % (player, play, ''.join(sorted(hands[player])))
+                )
+            if play == '-':
                 passes += 1
                 assert passes < 3
             else:
@@ -177,7 +178,7 @@ round1 = [
   '44422',
   '77 TT - - AA - - KKKK',
   '56789',
-  'x J A P x x D',
+  '- J A P - - D',
   'QQ',
 ]
 
@@ -185,12 +186,34 @@ clues1 = (
     '2.5 1.10 1.1 1.4 1.13 2.6 2.4',
     '1.7 2.1 1.14 1.7 1.4 1.3'
 )
+
+# LUCKY AND SKILLED
+# 1: 13456789TJQKAP
+# 2: 3447788999JKAA
+# 3: 22224668QQQKAd (86Q)
+# 4: 3355567TTTJJKD
+round2 = [
+    '1P3456789TJQKA',
+    '- 3 4 6 - J K - - A',
+    '44 66 JJ - - QQ',
+    '8 J - K A D',
+    '55533',
+    '7 - 9 Q K - - 2222',
+    'd'
+]
+clues2 = None
+# WINNING PLAYER SHOULD HAVE:
+# green on left, red on right
+
     # LUCKY AND SKILLED
     # 1: (Q3J6)
     # 3: 
     # AND WIFE
 
-validate_round(round1, clues=clues1, debug=True)
+# validate_round(
+#     round1, clues=clues1, debug=True)
+validate_round(
+    round2, clues=clues2, debug=True)
 
 
 print()
