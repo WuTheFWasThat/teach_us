@@ -9,13 +9,30 @@ def char2trits(char):
     trits = [num // 9, (num % 9) // 3, num % 3]
     return trits
 
+def card2num(card):
+    if card == 'T':
+        return 10
+    elif card == 'J':
+        return 11
+    elif card == 'Q':
+        return 12
+    elif card == 'K':
+        return 13
+    elif card == 'A':
+        return 1
+    else:
+        i = int(card)
+        assert i > 1
+        assert i < 10
+        return i
+
 def summod(nums):
     return ((sum(nums) - 1) % 26) + 1
 
 def num2char(num):
     return chr(ord('a') + num - 1)
 
-def validate_round(round, debug=False, verify=False):
+def validate_round(round, clues=None, debug=False, verify=False):
     card_counts = {
         '2': 4,
         '3': 4,
@@ -43,6 +60,7 @@ def validate_round(round, debug=False, verify=False):
     }
 
     player = 0
+    winner = None
     winners = []
     round_points = { 0:0, 1:0, 2:0, 3:0 }
 
@@ -72,7 +90,6 @@ def validate_round(round, debug=False, verify=False):
                 assert passes < 3
             else:
                 passes = 0
-                phoenix = False
                 for card in play:
                     if card == '5':
                         points += 5
@@ -83,17 +100,17 @@ def validate_round(round, debug=False, verify=False):
                         points += 25
                     elif card == 'P':
                         points -= 25
-                    if not phoenix:
-                        hands[player].append(card)
-                        card_counts[card] -= 1
-                        expect_true(
-                            card_counts[card] >= 0, 
-                            "Too many %s" % card
-                        )
-                    phoenix = card == 'P'
+                    hands[player].append(card)
+                    card_counts[card] -= 1
+                    expect_true(
+                        card_counts[card] >= 0, 
+                        "Too many %s" % card
+                    )
                     if card == 'd':
                         assert len(trick) == 1
                         dog = True
+                if winner is None and len(hands[player]) == 14:
+                    winner = player
             if debug:
                 if play != '-' and play != 'x':
                     print('    Player %d played %s, %d cards remaining' % (player, play, 14 - len(hands[player])))
@@ -108,6 +125,7 @@ def validate_round(round, debug=False, verify=False):
         print('    Winner: ', player, 'Points: ', points)
     print()
     print('Winners were', winners)
+    print('Winner was', winner)
     print('Points: ', round_points)
     print('Hands were')
     for (player, hand) in hands.items():
@@ -117,6 +135,28 @@ def validate_round(round, debug=False, verify=False):
         print('%d: %s' % (player, ''.join(sorted(hand))))
         expect_true(len(hand) <= 14, "Hand too large!")
     print('Cards remain: ', ''.join([card * count for (card, count) in card_counts.items()]))
+
+    if clues:
+        (part1, part2) = clues
+        phrase = ''
+        for clue in part1.split(' '):
+            index = int(clue[1:])
+            print('index', index)
+            if clue[0] == '1':
+                phrase += num2char(card2num(hands[winner][index]))
+            else:
+                print('card', hands[(winner + 2) % 4][index])
+                phrase += num2char(13 + card2num(hands[(winner + 2) % 4][index]))
+
+        phrase += ':'
+        for clue in part2.split(' '):
+            index = int(clue[1:])
+            if clue[0] == '1':
+                phrase += num2char(card2num(hands[(winner + 2) % 4][index]))
+            else:
+                phrase += num2char(13 + card2num(hands[winner][index]))
+        print('Clued phrase: ', phrase)
+
 res = sys.argv[1]
 nums = [char2num(char) for char in res]
 # print(num2char(summod(nums)))
@@ -124,25 +164,36 @@ nums = [char2num(char) for char in res]
 PASS = 0
 rounds = [
     [ # TEACH US, IN LIFE
-      # 1: 13456789TTQQAD (35689QA)
+      # 1: 13456789TTQAAD (358AA)
       # 2: 355668899TTJdP
-      # 3: 223356789KKKKA (678A)
+      # 3: 223356789KKKKQ (56789Q)
       # 4: 2244477QQJJJAA
       '3456789',
-      '1 3 A',
+      '1 3 Q',
       '2233 JJQQ',
       '44477',
-      '22 QQ',
-      'TT - - AA - - KKKK',
+      '22 TT - - AA - - KKKK',
       '56789',
       'x J A P x x D',
+      'A',
+      'Q',
     ],
     # LUCKY AND SKILLED
+    # 1: (Q3J6)
+    # 3: 
     # AND WIFE
 ]
 
-for round in rounds:
-    validate_round(round, True)
+all_clues = [
+    (
+        '212',
+        '212',
+     )
+]
+
+for round, clues in zip(rounds, all_clues):
+    validate_round(round, clues=clues, debug=True)
+
 
 print()
 poem = [
