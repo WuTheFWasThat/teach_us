@@ -15,69 +15,6 @@ def summod(nums):
 def num2char(num):
     return chr(ord('a') + num - 1)
 
-def sum_play(play):
-    nums = []
-    if play == '-' or play == 'x':
-        return 0
-    for card in play:
-        if card == '1':
-            nums.append(1)
-        elif card == 'd':
-            return 'd'
-        elif card == 'D':
-            return 'd'
-        elif card == 'P':
-            continue
-        elif card == 'T':
-            nums.append(10)
-        elif card == 'J':
-            nums.append(11)
-        elif card == 'Q':
-            nums.append(12)
-        elif card == 'K':
-            nums.append(13)
-        elif card == 'A':
-            nums.append(1)
-        else:
-            num = int(card)
-            assert num < 10
-            assert num > 1
-            nums.append(num)
-    return num2char(summod(nums))
-
-def sum_trick(trick):
-    nums = []
-    phoenix = False
-    for play in trick:
-        if play == '-' or play == 'x':
-            continue
-        for card in play:
-            if card == '1':
-                nums.append(1)
-            elif card == 'd':
-                assert len(trick) == 1
-                return None
-            elif card == 'D':
-                nums.append(char2num('d'))
-            elif card == 'P':
-                continue
-            elif card == 'T':
-                nums.append(10)
-            elif card == 'J':
-                nums.append(11)
-            elif card == 'Q':
-                nums.append(12)
-            elif card == 'K':
-                nums.append(13)
-            elif card == 'A':
-                nums.append(1)
-            else:
-                num = int(card)
-                assert num < 10
-                assert num > 1
-                nums.append(num)
-    return num2char(summod(nums))
-
 def validate_round(round, debug=False, verify=False):
     card_counts = {
         '2': 4,
@@ -107,6 +44,7 @@ def validate_round(round, debug=False, verify=False):
 
     player = 0
     winners = []
+    round_points = { 0:0, 1:0, 2:0, 3:0 }
 
     def expect_true(pred, message):
         if verify:
@@ -119,8 +57,10 @@ def validate_round(round, debug=False, verify=False):
         if debug:
             print('  Trick', i)
         passes = 0
+        points = 0
         dog = False
-        for j, play in enumerate(trick):
+        dragon_win = False
+        for j, play in enumerate(trick.split(' ')):
             if j != 0:
                 player = (player + 1) % 4
             expect_true(
@@ -134,6 +74,15 @@ def validate_round(round, debug=False, verify=False):
                 passes = 0
                 phoenix = False
                 for card in play:
+                    if card == '5':
+                        points += 5
+                    elif card == 'T' or card == 'K':
+                        points += 10
+                    elif card == 'D':
+                        dragon_win = True
+                        points += 25
+                    elif card == 'P':
+                        points -= 25
                     if not phoenix:
                         hands[player].append(card)
                         card_counts[card] -= 1
@@ -152,8 +101,14 @@ def validate_round(round, debug=False, verify=False):
             if dog:
                 player = (player + 1) % 4
         winners.append(player)
+        if dragon_win:
+            round_points[(player + 1) % 4] += points
+        else:
+            round_points[player] += points
+        print('    Winner: ', player, 'Points: ', points)
     print()
     print('Winners were', winners)
+    print('Points: ', round_points)
     print('Hands were')
     for (player, hand) in hands.items():
         hand = list(hand)
@@ -168,83 +123,26 @@ nums = [char2num(char) for char in res]
 
 PASS = 0
 rounds = [
-    [ # TEACH US
-        ['1', '6', 'Q',  'A'],
-        ['22', '88', 'KK'],
-        ['2', '3', '6', 'Q',  'A'],
+    [ # TEACH US, IN LIFE
+      # 1: 13456789TTQQAD (35689QA)
+      # 2: 355668899TTJdP
+      # 3: 223356789KKKKA (678A)
+      # 4: 2244477QQJJJAA
+      '3456789',
+      '1 3 A',
+      '2233 JJQQ',
+      '44477',
+      '22 QQ',
+      'TT - - AA - - KKKK',
+      '56789',
+      'x J A P x x D',
     ],
-    # OF LIFE
-    # [ # HUSBAND 
-    #     ['123456', '-', '-', '456789'],
-    #     ['22299', '-', 'JJJ88'],
-    #     ['3', '7', '8', '-', 'A'],
-    #     ['7', '9', 'J', 'A', 'D'],
-    #     # ['7', 'Q'],
-    #     # ['5566', '-' ,'-', 'TTQQ'],
-    #     # ['4', 'T', 'K', 'A'],
-    #     # ['8899', '-', '-', 'QQQQ'],
-    #     # ['d'],
-    #     ['2', '-', '-', 'KKKK'],
-    #     ['d'],
-    #     ['2', '-', 'x', '7', '9', '-', 'x', 'TTTT', 'QQQQ'],
-    #     ['445566'],
-    # ],
-    [ # HUSBAND 
-        ['1P345678'],
-        ['66699', 'JJJ77'],
-        ['88222', '55533', '33KKK'],
-        ['44', '-', '99', 'QQ', 'AA'],
-        ['7', '8', 'K', 'A'],
-        ['2', 'J', 'A', '-', 'TTTT'],
-        ['d'],
-    ],
-    [ # GOOD-WILLED
-        ['345678'],
-        ['JJJ44'],
-        ['12345'],
-        ['d'],
-        ['456789T'],
-        ['9P'], 
-        ['66'],
-        ['Q'],
-        [''],
-        ['D'],
-    ],
-    [ # AND WIFE
-        ['1', 'A'],
-        ['6789T'],
-        ['d'],
-        ['-'],
-        ['456789T'],
-        ['9P'], 
-        ['66'],
-        ['Q'],
-    ],
-    # [ # HUSBAND 
-    #     ['????????'],
-    #     ['???99', 'JJJ77'],
-    #     ['99444', '55533', '33???'],
-    #     ['22', '-', '88', 'QQ', 'AA'],
-    #     ['7', '8', '?', 'A'],
-    #     ['2', 'J', 'A', '-', 'TTTT'],
-    #     ['d'],
-    # ],
+    # LUCKY AND SKILLED
     # AND WIFE
 ]
 
 for round in rounds:
-    validate_round(round)
-
-    print(list(
-        # sum_trick(trick) for trick in round
-        sum_play(trick[-1]) for trick in round
-    ))
-
-validate_round(rounds[-1], True)
-print(list(
-    # sum_trick(trick) for trick in rounds[1]
-    sum_play(trick[-1]) for trick in rounds[-1]
-))
+    validate_round(round, True)
 
 print()
 poem = [
@@ -342,10 +240,6 @@ print(u"")
 #     print(char2trits(i))
 
 """
-1: 123456789QQKAD
-3: 223356789JJJJA
-2: 2355668899TTdP
-4: 44477TTQQKKKAA
 
 1: 3459JQ
 2: 68QA
