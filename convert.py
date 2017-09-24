@@ -116,14 +116,16 @@ def validate_round(round, clues=None, debug=False, verify=False):
                 if play != '-' and play != 'x':
                     print('    Player %d played %s, %d cards remaining' % (player, play, 14 - len(hands[player])))
                 # print('  Remaining hand: ', sorted(hands[player]))
-            if dog:
-                player = (player + 1) % 4
-        winners.append(player)
+        if dog:
+            player = (player + 2) % 4
+            winners.append('d')
+        else:
+            winners.append(player)
+            print('    Winner: ', player, 'Points: ', points)
         if dragon_win:
             round_points[(player + 1) % 4] += points
         else:
             round_points[player] += points
-        print('    Winner: ', player, 'Points: ', points)
     print()
     print('Winners were', winners)
     print('Winner was', winner)
@@ -167,10 +169,10 @@ nums = [char2num(char) for char in res]
 # print(num2char(summod(nums)))
 
 # TEACH US, IN LIFE
-# 1: 13456789TTQQAD (56789Q)
-# 2: 355668899TTJdP
-# 3: 223356789KKKKA (358AA)
-# 4: 2244477QQJJJAA
+# 0: 13456789TTQQAD (56789Q)
+# 1: 355668899TTJdP
+# 2: 223356789KKKKA (358AA)
+# 3: 2244477QQJJJAA
 round1 = [ 
   '3456789',
   '1 3 A',
@@ -188,20 +190,25 @@ clues1 = (
 )
 
 # LUCKY AND SKILLED
-# 1: 13456789TJQKAP
-# 2: 3447788999JKAA
-# 3: 22224668QQQKAd (86Q)
-# 4: 3355567TTTJJKD
+# 0: 13456789TJQKAP
+# 1: 3556668TTTJJKD
+# 2: 2222445899JQAd (8QJ 954)
+# 3: 33477789QQKKAA
 round2 = [
     '1P3456789TJQKA',
-    '- 3 4 6 - J K - - A',
-    '44 66 JJ - - QQ',
-    '8 J - K A D',
-    '55533',
-    '7 - 9 Q K - - 2222',
-    'd'
+    '- 3 5 8 - - J A',
+    '4 - 8 Q - - K A',
+    '44 - - 55 99 QQ',
+    '77733 - TTTJJ 2222',
+    'd',
+    '- 666',
+    'D',
+    '- 8'
 ]
-clues2 = None
+clues2 = (
+    '1.12 2.14 1.3 1.11 2.3',
+    '2.6 1.2 1.7 1.3 1.3 1.1 1.6'
+)
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
 
