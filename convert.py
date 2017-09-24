@@ -209,6 +209,17 @@ clues2 = (
     '1.12 2.14 1.3 1.11 2.3',
     '2.6 1.2 1.7 1.3 1.3 1.1 1.6'
 )
+
+# WISE AND GOOD WILLED
+# they get phoenix, thus get exactly 25 pts
+# 0: 1
+# 1:  2259T (259T)
+# 2:  
+# 3: 45679TQ (45679TQ) 
+round3 = [
+    '1 A',
+]
+clues3 = None
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
 
@@ -220,7 +231,7 @@ clues2 = (
 # validate_round(
 #     round1, clues=clues1, debug=True)
 validate_round(
-    round2, clues=clues2, debug=True)
+    round3, clues=clues3, debug=True)
 
 
 print()
