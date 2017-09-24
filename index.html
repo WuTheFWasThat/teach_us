@@ -9,6 +9,26 @@
       margin-left:auto; 
       margin-right:auto;
     }
+    .log {
+      padding-top: 20;
+    }
+    .log > div {
+      width: max-content;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .log > div > p {
+      text-align: left;
+    }
+    .poem .punctuation {
+      position: relative;
+      left: 14;
+      margin-right: -14;
+    }
+    .clue.marker {
+      padding-right: 10;
+    }
     .clue th, .clue td {
       width: 40;
       height: 50;
@@ -19,6 +39,12 @@
     .clue .icon {
       width: 30;
       height: 50;
+    }
+    .poem {
+      padding: 20;
+      margin-top: 40;
+      margin-bottom: 40;
+      border: 1px solid gray;
     }
     .poem th, .poem td {
       font-size: 20;
@@ -43,7 +69,7 @@
   <body>
 
     <h1>
-      TEACH US, IN LIFE
+      TEACH US
     </h1>
     <table class="poem">
       <tr>
@@ -62,7 +88,8 @@
         </td-->
         <td>and</td>
         <td>
-          <img src="images/sword.png" class="icon"/>,
+          <img src="images/sword.png" class="icon"/>
+          <span class="punctuation">,</span>
         </td>
         <!--td>________,</td-->
       </tr>
@@ -74,7 +101,8 @@
         <!--td>____</td-->
         <td>and</td>
         <td>
-          <img src="images/dog.png" class="icon"/>,
+          <img src="images/dog.png" class="icon"/>
+          <span class="punctuation">,</span>
         </td>
         <!--td>____-______,</td-->
       </tr>
@@ -86,7 +114,8 @@
         <!--td>_______</td-->
         <td>and</td>
         <td>
-          <img src="images/phoenix.png" class="icon"/>,
+          <img src="images/phoenix.png" class="icon"/>
+          <span class="punctuation">,</span>
         </td>
         <!--td>____,</td-->
       </tr>
@@ -98,7 +127,8 @@
         <!--td>_____ ____</td-->
         <td></td>
         <td>
-          <img src="images/pagoda.png" class="icon"/>.
+          <img src="images/pagoda.png" class="icon"/>
+          <span class="punctuation">.</span>
         </td>
         <!--td>_________.</td-->
       </tr>
@@ -108,6 +138,7 @@
       Round 1
     </h2>
     <table>
+      <tr><td><table>
       <tr>
         <th>T</th>
         <th>E</th>
@@ -128,8 +159,8 @@
         <td class="hand2">6</td>
         <td class="hand2">4</td>
       </tr>
-    </table>
-    <table>
+      </table></td></tr>
+      <tr><td><table>
       <tr class="clue">
         <td class="hand1">7</td>
         <td class="hand2">1</td>
@@ -148,27 +179,32 @@
         <th>F</th>
         <th>E</th>
       </tr>
+      </table></td></tr>
+      <tr><td class="log" colspan="999">
+        <div>
+        <p>
+        3456789 - - - <br/>
+        1(A) 3 A - - - <br/>
+        2233 JJQQ - - - <br/>
+        44422 - - - <br/>
+        77 TT - - AA - - KKKK - - - <br/>
+        56789 - - - <br/>
+        - J A P - - D(L) - - - <br/>
+        QQ
+        </p>
+        100 <b>100</b>
+        0 <b>0</b>
+        </div>
+      </td></tr>
+      <tr>
     </table>
-    <p>
-    3456789 - - - <br/>
-    1(A) 3 A - - - <br/>
-    2233 JJQQ - - - <br/>
-    44422 - - - <br/>
-    77 TT - - AA - - KKKK - - - <br/>
-    56789 - - - <br/>
-    - J A P - - D(L) - - - <br/>
-    QQ
-    </p>
-    <p><b>
-      Score: 100 0
-    </b></p>
 
     <h2>
       Round 2
     </h2>
     <table>
       <tr>
-        <td class="clue">
+        <td class="clue marker">
           <img src="images/mahjong.png" class="icon"/>
         </td>
         <td><table class="clue"><tr>
@@ -180,7 +216,7 @@
         </tr></table></td>
       </tr>
       <tr>
-        <td class="clue">
+        <td class="clue marker">
           <img src="images/sword.png" class="icon"/>
         </td>
         <td><table class="clue"><tr>
@@ -193,28 +229,31 @@
           <td class="hand1">6</td>
         </tr></table></td>
       </tr>
+      <tr><td class="log" colspan="999">
+        <div>
+        <p>
+        1(3)P(2)3456789TJQKA - - -<br/>
+        - 3 5 8 - - J A - - -<br/>
+        4 - 8 Q - - K A - - -<br/>
+        44 - - 55 99 QQ - - -<br/>
+        77733 - TTTJJ 2222 - - -<br/>
+        d<br/>
+        - 666 - - -<br/>
+        D - - -<br/>
+        - 8<br/>
+        </p>
+        100+T <b>300</b> 
+        0 <b>0</b>
+        </div>
+      </td></tr>
     </table>
-    <p>
-    1(3)P(2)3456789TJQKA - - -<br/>
-    - 3 5 8 - - J A - - -<br/>
-    4 - 8 Q - - K A - - -<br/>
-    44 - - 55 99 QQ - - -<br/>
-    77733 - TTTJJ 2222 - - -<br/>
-    d<br/>
-    - 666 - - -<br/>
-    D - - -<br/>
-    - 8<br/>
-    </p>
-    <p><b>
-      Score: 300(T) 0
-    </b></p>
 
     <h2>
       Round 3
     </h2>
     <table>
       <tr>
-        <td class="clue">
+        <td class="clue marker">
           <img src="images/star.png" class="icon"/>
         </td>
         <td><table class="clue"><tr>
@@ -222,11 +261,10 @@
           <td class="hand2">14</td>
           <td class="hand1">3</td>
           <td class="hand1">11</td>
-          <td class="hand2">3</td>
         </tr></table></td>
       </tr>
       <tr>
-        <td class="clue">
+        <td class="clue marker">
           <img src="images/dog.png" class="icon"/>
         </td>
         <td><table class="clue"><tr>
@@ -234,11 +272,32 @@
           <td class="hand1">2</td>
           <td class="hand1">7</td>
           <td class="hand1">3</td>
+          <td>-</td>
+          <td class="hand1">1</td>
+          <td class="hand1">1</td>
+          <td class="hand1">6</td>
           <td class="hand1">3</td>
           <td class="hand1">1</td>
           <td class="hand1">6</td>
         </tr></table></td>
       </tr>
+      <tr><td class="log" colspan="999">
+        <div>
+        <p>
+        1(3)P(2)3456789TJQKA - - -<br/>
+        - 3 5 8 - - J A - - -<br/>
+        4 - 8 Q - - K A - - -<br/>
+        44 - - 55 99 QQ - - -<br/>
+        77733 - TTTJJ 2222 - - -<br/>
+        d<br/>
+        - 666 - - -<br/>
+        D - - -<br/>
+        - 8<br/>
+        </p>
+        100 <b>400</b> 
+        0 <b>0</b>
+        </div>
+      </td></tr>
     </table>
     <p>
 
