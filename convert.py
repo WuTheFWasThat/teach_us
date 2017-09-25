@@ -71,12 +71,12 @@ def validate_round(round, clues=None, debug=False, verify=False):
             if not pred:
                 print("ERROR: ", message)
 
-    dog = False
     for i, trick in enumerate(round):
         if debug:
             print('  Trick', i)
         passes = 0
         points = 0
+        dog = False
         dragon_win = False
         trick_done = False
         for j, play in enumerate(trick.split(' ')):
@@ -85,7 +85,9 @@ def validate_round(round, clues=None, debug=False, verify=False):
                 (play == '-') == (dog or (len(hands[player]) == 14)), 
                 "Player %d should pass when done: %s %s %s" % (player, play, dog, ''.join(sorted(hands[player])))
             )
-            if dog: dog = False
+            if dog: 
+                trick_done = True
+                assert play == '-'
             if play == '-' or play == '.':
                 passes += 1
                 if passes == 3:
@@ -109,9 +111,8 @@ def validate_round(round, clues=None, debug=False, verify=False):
                         "Too many %s" % card
                     )
                     if card == 'd':
-                        assert len(trick) == 1
+                        assert trick == 'd -'
                         dog = True
-                        trick_done = True
                 if winner is None and len(hands[player]) == 14:
                     winner = player
             if debug:
@@ -209,8 +210,8 @@ round2 = [
     '4 - 8 Q . - K A . - .',
     '44 . - 55 99 QQ - . .',
     '77733 - TTTJJ 2222 . - .',
-    'd',
-    '- - 666 . . -',
+    'd -',
+    '- 666 . . -',
     'D . . -',
     '- 8 . - -'
 ]
@@ -222,21 +223,25 @@ clues2 = (
 # WISE AND GOOD WILLED
 # they get phoenix, thus get exactly 25 pts
 # tricky dog
-# 0: 12444667889TQA
-# 1: 2233599TTJJAKK (259T)
+# 0: 12444667889TKK
+# 1: 2233599TTJJAAA (259T)
 # 2: 5567788JQQAdDP
-# 3: 23345679TJQKKA (45679TQ) 
+# 3: 23345679TJQKKQ (45679TQ) 
 round3 = [
     '1 A . . .',
     '2233 7788 . . 99TT . . .', 
-    '5 6 . 8 . J K . . A . . .',
+    '5 6 . 8 . J Q K A D . . .',
     '55 . . JJ QQ . . .', 
-    'd', 
-    '- - 444 . . .',
-    '2 K D . . .',
-    '. 234567 . . .',
-    '3 6 K . . A . . .',
-    '6789T . . 9TJQK . . .'
+    'd -', 
+    '444 . . .',
+    '2 . A . . .',
+    'P 3 6 . - .',
+    '6789T . - 9TJQK . . -',
+    '234567 . . -',
+    'K . A - - .',
+    # '. 234567 . . .',
+    # '3 6 K . . A . . .',
+    # '6789T . . 9TJQK . . .'
     # 'P . A', 
     # '556P ', 
 ]
@@ -260,13 +265,13 @@ validate_round(
 print()
 poem = [
     'teach us,          in life',
-     # 'to be'
+     # to be
     'lucky        and   skilled',        # mahjong, sword
-     # 'to be'
+     # to be
     'wise         and   good willed',     # star, dog
-     # 'to be'
+     # as
     'husband      and   wife',         # dragon, phoenix
-     # 'to have'
+     # to have
     'grand vows         fulfilled',   # jade, pagoda 
 ]
 for line in poem:
@@ -311,16 +316,6 @@ for line in poem:
 #   num passes in trinary (dog)
 #   permutation of suits of numbers (phoenix)
 #   winning numbers (dragon)
-
-"""
-                 TEACH US          IN LIFE,    
-to be            _____ ___         _______,    
-to be            _____ ___     ____-______,    
-to become        _______          ___ ____,    
-to have          _____ ____      _________.    
-"""
-
-print(u"")
 
 """
 [0, 1, 2, 3] = A
