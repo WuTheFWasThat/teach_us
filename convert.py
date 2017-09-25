@@ -71,24 +71,25 @@ def validate_round(round, clues=None, debug=False, verify=False):
             if not pred:
                 print("ERROR: ", message)
 
+    dog = False
     for i, trick in enumerate(round):
         if debug:
             print('  Trick', i)
         passes = 0
         points = 0
-        dog = False
         dragon_win = False
+        trick_done = False
         for j, play in enumerate(trick.split(' ')):
-            if j != 0:
-                player = (player + 1) % 4
-            if len(hands[player]) == 14: 
-                expect_true(
-                    play == '-',
-                    "Player %d should pass when done: %s %s" % (player, play, ''.join(sorted(hands[player])))
-                )
-            if play == '-':
+            assert not trick_done
+            expect_true(
+                (play == '-') == (dog or (len(hands[player]) == 14)), 
+                "Player %d should pass when done: %s %s %s" % (player, play, dog, ''.join(sorted(hands[player])))
+            )
+            if dog: dog = False
+            if play == '-' or play == '.':
                 passes += 1
-                assert passes < 3
+                if passes == 3:
+                    trick_done = True
             else:
                 passes = 0
                 for card in play:
@@ -110,16 +111,16 @@ def validate_round(round, clues=None, debug=False, verify=False):
                     if card == 'd':
                         assert len(trick) == 1
                         dog = True
+                        trick_done = True
                 if winner is None and len(hands[player]) == 14:
                     winner = player
             if debug:
-                if play != '-' and play != 'x':
+                if play != '-' and play != '.':
                     print('    Player %d played %s, %d cards remaining' % (player, play, 14 - len(hands[player])))
                 # print('  Remaining hand: ', sorted(hands[player]))
-        if dog:
-            player = (player + 2) % 4
-            winners.append('d')
-        else:
+            player = (player + 1) % 4
+        assert trick_done, trick
+        if not dog:
             winners.append(player)
             print('    Winner: ', player, 'Points: ', points)
         if dragon_win:
@@ -164,6 +165,13 @@ def validate_round(round, clues=None, debug=False, verify=False):
                 phrase += num2char(13 + card2num(hands[winner][index]))
         print('Clued phrase: ', phrase)
 
+# DOT MEANS PASS
+# DASH MEANS FORCED PASS (except bomb, should handle that too)
+
+# TODOS AFTER HTML:
+# - fill in phoenix and mahjong and dragon choices
+# - make forced passes for bombs
+
 res = sys.argv[1]
 nums = [char2num(char) for char in res]
 # print(num2char(summod(nums)))
@@ -174,15 +182,16 @@ nums = [char2num(char) for char in res]
 # 2: 223356789KKKKA (358AA)
 # 3: 2244477QQJJJAA
 round1 = [ 
-  '3456789',
-  '1 3 A',
-  '2233 JJQQ',
-  '44422',
-  '77 TT - - AA - - KKKK',
-  '56789',
-  '- J A P - - D',
-  'QQ',
+  '3456789 . . .',
+  '1 3 A . . .',
+  '2233 JJQQ . . .',
+  '44422 . . .',
+  '77 TT . . AA . . KKKK . . .',
+  '56789 . . .',
+  '- J A P - - D . - -',
+  'QQ . - -',
 ]
+
 
 clues1 = (
     '2.5 1.10 1.1 1.4 1.13 2.6 2.4',
@@ -195,15 +204,15 @@ clues1 = (
 # 2: 2222445899JQAd (8QJ 954)
 # 3: 33477789QQKKAA
 round2 = [
-    '1P3456789TJQKA',
-    '- 3 5 8 - - J A',
-    '4 - 8 Q - - K A',
-    '44 - - 55 99 QQ',
-    '77733 - TTTJJ 2222',
+    '1P3456789TJQKA . . .',
+    '- 3 5 8 - . J A - . .',
+    '4 - 8 Q . - K A . - .',
+    '44 . - 55 99 QQ - . .',
+    '77733 - TTTJJ 2222 . - .',
     'd',
-    '- 666',
-    'D',
-    '- 8'
+    '- - 666 . . -',
+    'D . . -',
+    '- 8 . - -'
 ]
 clues2 = (
     '1.12 2.14 1.3 1.11 2.3',
@@ -212,12 +221,24 @@ clues2 = (
 
 # WISE AND GOOD WILLED
 # they get phoenix, thus get exactly 25 pts
-# 0: 1
-# 1:  2259T (259T)
-# 2:  
-# 3: 45679TQ (45679TQ) 
+# tricky dog
+# 0: 12444667889TQA
+# 1: 2233599TTJJAKK (259T)
+# 2: 5567788JQQAdDP
+# 3: 23345679TJQKKA (45679TQ) 
 round3 = [
-    '1 A',
+    '1 A . . .',
+    '2233 7788 . . 99TT . . .', 
+    '5 6 . 8 . J K . . A . . .',
+    '55 . . JJ QQ . . .', 
+    'd', 
+    '- - 444 . . .',
+    '2 K D . . .',
+    '. 234567 . . .',
+    '3 6 K . . A . . .',
+    '6789T . . 9TJQK . . .'
+    # 'P . A', 
+    # '556P ', 
 ]
 clues3 = None
 # WINNING PLAYER SHOULD HAVE:
@@ -230,6 +251,8 @@ clues3 = None
 
 # validate_round(
 #     round1, clues=clues1, debug=True)
+# validate_round(
+#     round2, clues=clues2, debug=True)
 validate_round(
     round3, clues=clues3, debug=True)
 
