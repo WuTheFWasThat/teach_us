@@ -32,7 +32,7 @@ def summod(nums):
 def num2char(num):
     return chr(ord('a') + num - 1)
 
-def validate_round(round, clues=None, debug=False, verify=False):
+def validate_round(round, clues=None, debug=False, verify=False, clue_winner=None):
     card_counts = {
         '2': 4,
         '3': 4,
@@ -142,6 +142,8 @@ def validate_round(round, clues=None, debug=False, verify=False):
     print('Cards remain: ', ''.join([card * count for (card, count) in card_counts.items()]))
 
     if clues:
+        if clue_winner:
+            winner = clue_winner
         (part1, part2) = clues
         phrase = ''
         for clue in part1.split(' '):
@@ -243,7 +245,10 @@ round3 = [
     '2 K - . .',
     '- - 3 . - -',
 ]
-clues3 = None
+clues3 = (
+    '2.2 1.6 2.10 1.10',
+    '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+)
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
 
@@ -257,7 +262,7 @@ clues3 = None
 # validate_round(
 #     round2, clues=clues2, debug=True)
 validate_round(
-    round3, clues=clues3, debug=True)
+    round3, clues=clues3, debug=True, clue_winner=1)
 
 
 print()
