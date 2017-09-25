@@ -223,33 +223,25 @@ clues2 = (
 # WISE AND GOOD WILLED
 # they get phoenix, thus get exactly 25 pts
 # tricky dog
-# 0: 12444667889TAA
+# 0: 12444677889TAA
 # 1: 2233599TTJJAQK (259T)
-# 2: 5567788JQQAdDP
+# 2: 5566788JQQAdDP
 # 3: 23345679TJQKKK (45679TQ) 
 
-# 0: 667889TKA
-# 1: K (259T)
 round3 = [
     '1 A . . .',
-    '2233 7788 . . 99TT . . .', 
-    '5 6 K . . A . . .',
-    '55 . . JJ QQ . . .', 
+    '2233 5566 . . 99TT . . .', 
+    '5 7 . 8 Q A . . .',
+    '88 . . JJ QQ . . .', 
+    'JP . . .', 
+    'D . . .', 
     'd -', 
-    '444 . . .',
-    '2 Q D . . .',
-    'JP . . .',
-    '- 234567 . . -',
-    '9TJQKA . . -',
-    '3 A . - .',
-    '6789T . - -',
-    'K . - -',
-    '8 K - - -',
-    # '. 234567 . . .',
-    # '3 6 K . . A . . .',
-    # '6789T . . 9TJQK . . .'
-    # 'P . A', 
-    # '556P ', 
+    '444 . - .',
+    '6789T . - 9TJQK . . -',
+    '234567 . . -',
+    'KK AA . - .',
+    '2 K - . .',
+    '- - 3 . - -',
 ]
 clues3 = None
 # WINNING PLAYER SHOULD HAVE:
