@@ -223,8 +223,6 @@ clues2 = (
 )
 
 # WISE AND GOOD WILLED
-# they get phoenix, thus get exactly 25 pts
-# tricky dog
 # 0: 12444677889TAA
 # 1: 2233599TTJJAQK (259T)
 # 2: 5566788JQQAdDP
@@ -249,6 +247,69 @@ clues3 = (
     '2.2 1.6 2.10 1.10',
     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
 )
+
+# HUSBAND AND WIFE
+# 0:  122233377799AP
+# 1:  2447888TTQQQQA (248TA) <- should win
+# 2:  3445566TTJJDAd
+# 3:  5566899JJKKKKA (5689A) 
+# round4 = [
+#     '222333 . . .',
+#     '77799 88844 . . .',
+#     '2 3 8 A QQQQ . . .',
+#     '7 A . . .',
+#     '445566 . . .',
+#     'TTJJ KKKK . . .',
+#     '5566 . . .',
+#     '99 . TT . JJ . . .',
+# ]
+# 0:  1222333777TTAP
+# 1:  244888TTQQQQAd (248TA) <- should win
+# 2:  3445566999JJDA
+# 3:  5566789JJKKKKA (5689A) 
+round4 = [
+    '222333 . . .',
+    '777TT 88844 999JJ . . .',
+    '445566 . . .',
+    '3 5 A QQQQ . . .',
+    'TT . JJ . . .',
+    '56789 . . .',
+    # d - 
+    # 6 . 8
+
+    # '7 A . . .',
+    # '445566 . . .',
+    # 'TTJJ KKKK . . .',
+    # '5566 . . .',
+    # '99 . TT . JJ . . .',
+]
+clues4 = None # (
+#     '2.2 1.6 2.10 1.10',
+#     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+# )
+
+# STRAIGHT FLUSH BOMB
+# dog to partner for mahjong?
+# GRAND VOWS FULFILLED
+# 0:   (478A) <- should win
+# 1:  222333477999AP
+# 2:   (254669TQQA) 
+# 3:  3556677TTJJAD
+
+round5 = [
+    '1 A . . .',
+    '33322 . . 88844 99944 KKKK . . .',
+    'd -',
+    '2 7 8 A . . .',
+    '556677 . . .',
+    'TTJJ . . .',
+    '2 T . J - QQQQ . . .',
+]
+clues5 = None # (
+#     '2.2 1.6 2.10 1.10',
+#     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+# )
+
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
 
@@ -261,9 +322,10 @@ clues3 = (
 #     round1, clues=clues1, debug=True)
 # validate_round(
 #     round2, clues=clues2, debug=True)
+#validate_round(
+#    round3, clues=clues3, debug=True, clue_winner=1)
 validate_round(
-    round3, clues=clues3, debug=True, clue_winner=1)
-
+    round4, clues=clues4, debug=True, clue_winner=1)
 
 print()
 poem = [
