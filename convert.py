@@ -265,15 +265,21 @@ clues3 = (
 # ]
 # 0:  1222333777JAAP
 # 1:  244888TTQQQQAd (248TA) <- should win
-# 2:  3445566999TTJD
-# 3:  5566789JJKKKKA (5689A) 
+# 2:  3445566999TT6D
+# 3:  556789JJJKKKKA (5689A) 
+
+# 0:  1P
+# 1:  2TTd (248TA) <- should win
+# 2:  6D
+# 3:  56789JKKKKA (5689A) 
 round4 = [
     '222333 . . .',
     '777 888 999 . . .',
     '445566 . . .',
     '3 5 J A . . .',
     '44 TT JJ AA QQQQ . . .',
-    '2 J A . . .',
+    # '44 TT JJ AA QQQQ . . .',
+    # '2 J A . . .',
     # '56789TJ . . .',
     # '6 . T A . . QQQQ . . .',
     # 'd -',
