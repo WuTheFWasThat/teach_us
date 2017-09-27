@@ -174,6 +174,7 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
 # TODOS AFTER HTML:
 # - fill in phoenix and mahjong and dragon choices
 # - make forced passes for bombs
+# - get rid of passes on last round
 
 res = sys.argv[1]
 nums = [char2num(char) for char in res]
@@ -271,25 +272,29 @@ clues4 = (
 # STRAIGHT FLUSH BOMB
 # dog to partner for mahjong?
 # GRAND VOWS FULFILLED
-# 0:   (478A) <- should win
-# 1:  222333477999AP
-# 2:   (254669TQQA) 
-# 3:  3556677TTJJAD
+# 0:  147788JJJQQAAD (478A) <- should win
+# 1:  2235999TTJKKKK
+# 2:  2345634567QQAd (245669TQQA) 
+# 3:  2345667889TTAP
 
 # A1dP
 round5 = [
-    '1 A . . .',
-    '33322 . . 88844 99944 KKKK . . .',
+    '1 3 . A . . .',
+    '2345678 . . .',
+    '6P89T . . 23456 . . .',
     'd -',
-    '2 7 8 A . . .',
-    '556677 . . .',
-    'TTJJ . . .',
-    '2 T . J - QQQQ . . .',
+    '7788 99TT . . JJQQ . . .',
+    '4 5 A . D . . .',
+    'A KKKK . . .',
+    '22 . . .',
+    '9 Q . A . . .',
+    'J . Q . - .',
+    '34567 . - .'
 ]
-clues5 = None # (
-#     '2.2 1.6 2.10 1.10',
-#     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
-# )
+clues5 = (
+    '1.3 2.12 1.12 2.7 1.10',
+    '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+)
 
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
@@ -305,8 +310,10 @@ clues5 = None # (
 #     round2, clues=clues2, debug=True)
 #validate_round(
 #    round3, clues=clues3, debug=True, clue_winner=1)
+# validate_round(
+#     round4, clues=clues4, debug=True)
 validate_round(
-    round4, clues=clues4, debug=True, clue_winner=1)
+    round5, clues=clues5, debug=True)
 
 print()
 poem = [
