@@ -144,28 +144,32 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
     if clues:
         if clue_winner:
             winner = clue_winner
+
+        def clued_letter(player, away, index):
+            try:
+                return num2char(13 * away + card2num(hands[(player + 2 * away) % 4][index]))
+            except Exception as e:
+                print(e)
+                return '?'
+
         (part1, part2) = clues
         phrase = ''
         for clue in part1.split(' '):
             assert clue[1] == '.' 
             index = int(clue[2:]) - 1
             if clue[0] == '1':
-                # print('card', hands[winner][index])
-                phrase += num2char(card2num(hands[winner][index]))
+                phrase += clued_letter(winner, False, index)
             else:
-                # print('card', hands[(winner + 2) % 4][index])
-                phrase += num2char(13 + card2num(hands[(winner + 2) % 4][index]))
+                phrase += clued_letter(winner, True, index)
 
         phrase += '.'
         for clue in part2.split(' '):
             assert clue[1] == '.' 
             index = int(clue[2:]) - 1
             if clue[0] == '1':
-                # print('card', hands[(winner + 2) % 4][index])
-                phrase += num2char(card2num(hands[(winner + 2) % 4][index]))
+                phrase += clued_letter((winner + 2) % 4, False, index)
             else:
-                # print('card', hands[winner][index])
-                phrase += num2char(13 + card2num(hands[winner][index]))
+                phrase += clued_letter((winner + 2) % 4, True, index)
         print('Clued phrase: ', phrase)
 
 # 1dDP 22223333444455556666777788889999TTTTJJJJQQQQKKKKAAAA
@@ -282,21 +286,23 @@ clues4 = (
 # A1dP
 round5 = [
     '1 2 Q A . . .',
-    '23456 . . .',
-    '6P89T . . 23456 . . .',
+    '56P89T . . .',
+    '23456 . . 23456 . . .',
     'd -',
-    '44 . . .',
-    '7788 99TT . . QQKK JJJJ . . .',
+    '44 99 . . QQ . . .',
+    '7788 . . .',
+    'KK JJJJ . . .',
     '33 . . .',
+    'TT . . .',
     '2 K A D . . .',
     'A . . .',
-    '5 7 A . - .',
+    '5 K A . - .',
     '6789T . - .',
 ]
-clues5 = None # (
-#     '1.3 2.12 1.12 2.7 1.10 2. 2. 2. 2.',
-#     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
-# )
+clues5 = (
+    '1.7 2.5 1.13 2.9 1.3 2.13 2.2 2.14 2.6',
+    '1.1 2.9 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+)
 
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
