@@ -278,15 +278,15 @@ clues4 = (
 # STRAIGHT FLUSH BOMB
 # dog to partner for mahjong?
 # GRAND VOWS FULFILLED
-# 0:  14457788QQKKAD (478A) <- should win
-# 1:  22335799TTJJJJ
-# 2:  234566789TQKAd (245669TQQA) 
-# 3:  234566P89TQKAA
+# 0:  15 44 7788 QQKK AD (478A) <- should win
+# 1:  2233 8 99TT Q JJJJ
+# 2:  23456 6789T QKAd (245669TQQA) 
+# 3:  23456 567P9T KAA
 
 # A1dP
 round5 = [
     '1 2 Q A . . .',
-    '56P89T . . .',
+    '567P9T . . .',
     '23456 . . 23456 . . .',
     'd -',
     '44 99 . . QQ . . .',
@@ -296,7 +296,7 @@ round5 = [
     'TT . . .',
     '2 K A D . . .',
     'A . . .',
-    '5 K A . - .',
+    '5 Q A . - .',
     '6789T . - .',
 ]
 clues5 = (
