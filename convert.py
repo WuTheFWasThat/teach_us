@@ -123,7 +123,8 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
         assert trick_done, trick
         if not dog:
             winners.append(player)
-            print('    Winner: ', player, 'Points: ', points)
+            if debug:
+                print('    Winner: ', player, 'Points: ', points)
         if dragon_win:
             round_points[(player + 1) % 4] += points
         else:
@@ -167,9 +168,9 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
             assert clue[1] == '.' 
             index = int(clue[2:]) - 1
             if clue[0] == '1':
-                phrase += clued_letter((winner + 2) % 4, False, index)
-            else:
                 phrase += clued_letter((winner + 2) % 4, True, index)
+            else:
+                phrase += clued_letter((winner + 2) % 4, False, index)
         print('Clued phrase: ', phrase)
 
 # 1dDP 22223333444455556666777788889999TTTTJJJJQQQQKKKKAAAA
@@ -205,7 +206,7 @@ round1 = [
 
 clues1 = (
     '2.5 1.10 1.1 1.4 1.13 2.6 2.4',
-    '1.7 2.1 1.14 1.7 1.4 1.3'
+    '2.7 1.1 2.14 2.7 2.4 2.3'
 )
 
 # LUCKY AND SKILLED
@@ -226,7 +227,7 @@ round2 = [
 ]
 clues2 = (
     '1.12 2.14 1.3 1.11 2.3',
-    '2.6 1.2 1.7 1.3 1.3 1.1 1.6'
+    '1.6 2.2 2.7 2.3 2.3 2.1 2.6'
 )
 
 # WISE AND GOOD WILLED
@@ -252,7 +253,7 @@ round3 = [
 ]
 clues3 = (
     '2.2 1.6 2.10 1.10',
-    '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+    '2.11 1.2 1.3 2.8 1.9 2.1 2.4 2.4 2.9 2.8'
 )
 
 # HUSBAND AND WIFE
@@ -272,7 +273,7 @@ round4 = [
 ]
 clues4 = (
     '1.1 2.10 2.8 1.6 1.14 2.14 1.5',
-    '2.13 1.11 1.8 1.7'
+    '1.13 2.11 2.8 2.7'
 )
 
 # STRAIGHT FLUSH BOMB
@@ -301,8 +302,10 @@ round5 = [
 ]
 clues5 = (
     '1.7 2.5 1.13 2.9 1.3 2.13 2.2 2.14 2.6',
-    '1.10 2.8 1.8 1.6 1.13 1.1 1.1 1.5 1.4'
+    '2.10 1.8 2.8 2.6 2.13 2.1 2.1 2.5 2.4'
 )
+# REMAIN: 8K
+# blacked out: 23456,Q,Q
 
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
@@ -312,16 +315,17 @@ clues5 = (
     # 3: 
     # AND WIFE
 
-# validate_round(
-#     round1, clues=clues1, debug=True)
-# validate_round(
-#     round2, clues=clues2, debug=True)
-#validate_round(
-#    round3, clues=clues3, debug=True, clue_winner=1)
-# validate_round(
-#     round4, clues=clues4, debug=True)
+debug = False
 validate_round(
-    round5, clues=clues5, debug=True)
+    round1, clues=clues1, debug=debug)
+validate_round(
+    round2, clues=clues2, debug=debug)
+validate_round(
+   round3, clues=clues3, debug=debug, clue_winner=1)
+validate_round(
+    round4, clues=clues4, debug=debug)
+validate_round(
+    round5, clues=clues5, debug=debug)
 
 print()
 poem = [
