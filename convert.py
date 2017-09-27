@@ -168,6 +168,8 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
                 phrase += num2char(13 + card2num(hands[winner][index]))
         print('Clued phrase: ', phrase)
 
+# 1dDP 22223333444455556666777788889999TTTTJJJJQQQQKKKKAAAA
+
 # DOT MEANS PASS
 # DASH MEANS FORCED PASS (except bomb, should handle that too)
 
@@ -272,29 +274,29 @@ clues4 = (
 # STRAIGHT FLUSH BOMB
 # dog to partner for mahjong?
 # GRAND VOWS FULFILLED
-# 0:  147788JJJQQAAD (478A) <- should win
-# 1:  2235999TTJKKKK
-# 2:  2345634567QQAd (245669TQQA) 
-# 3:  2345667889TTAP
+# 0:  14457788QQKKAD (478A) <- should win
+# 1:  22335799TTJJJJ
+# 2:  234566789TQKAd (245669TQQA) 
+# 3:  234566P89TQKAA
 
 # A1dP
 round5 = [
-    '1 3 . A . . .',
-    '2345678 . . .',
+    '1 2 Q A . . .',
+    '23456 . . .',
     '6P89T . . 23456 . . .',
     'd -',
-    '7788 99TT . . JJQQ . . .',
-    '4 5 A . D . . .',
-    'A KKKK . . .',
-    '22 . . .',
-    '9 Q . A . . .',
-    'J . Q . - .',
-    '34567 . - .'
+    '44 . . .',
+    '7788 99TT . . QQKK JJJJ . . .',
+    '33 . . .',
+    '2 K A D . . .',
+    'A . . .',
+    '5 7 A . - .',
+    '6789T . - .',
 ]
-clues5 = (
-    '1.3 2.12 1.12 2.7 1.10',
-    '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
-)
+clues5 = None # (
+#     '1.3 2.12 1.12 2.7 1.10 2. 2. 2. 2.',
+#     '1.11 2.2 2.3 1.8 2.9 1.1 1.4 1.4 1.9 1.8'
+# )
 
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
