@@ -283,12 +283,10 @@ round4 = [
 #     'A . . .',
 # ]
 clues4 = (
-    '1.1 2.10 2.8 1.6 1.14 2.14 1.5',
-    '1.13 2.11 2.8 2.7'
+    '1.1 2.10 2.8 1.6 1.14 2.14 1.4',
+    '1.13 2.11 2.8 2.1'
 )
 
-# STRAIGHT FLUSH BOMB
-# dog to partner for mahjong?
 # GRAND VOWS FULFILLED
 # 0:  15 44 7788 QQKK AD (478A) <- should win
 # 1:  2233 8 99TT Q JJJJ
