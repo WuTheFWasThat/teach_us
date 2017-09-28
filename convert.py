@@ -258,18 +258,30 @@ clues3 = (
 # HUSBAND AND WIFE
 # 0:  122233377799AP
 # 1:  244888TTTQQQQA (248TA) <- should win
-# 2:  34455666JJJADd
-# 3:  5567899TJKKKKA (5689A) 
+# 2:  3455666JJJJADd
+# 3:  45567899TKKKKA (5689A) 
 round4 = [
     '222333 . . .',
     '77799 88844 . . .',
     '2 3 5 A QQQQ . . .',
-    'TTT JJJ . . .',
-    '445566 . . .',
-    '6 9 . A . KKKK . - .',
-    '56789TJ . - .',
+    'TTT JJJJ . . .',
+    '55666 . . .',
+    '4 9 . A . KKKK . - .',
+    '456789T . - .',
     'A . - .',
 ]
+# alt:
+# round4 = [
+#     '222333 . . .',
+#     '1 A . . .',
+#     '88844 JJJ44 . . .',
+#     '66655 . 77799 QQQQ . . .',
+#     'TTT . . .',
+#     '2 3 9 A - . KKKK . . .',
+#     '6789TJ . . .',
+#     '55 . . .',
+#     'A . . .',
+# ]
 clues4 = (
     '1.1 2.10 2.8 1.6 1.14 2.14 1.5',
     '1.13 2.11 2.8 2.7'
@@ -321,9 +333,9 @@ validate_round(
 validate_round(
    round3, clues=clues3, debug=debug, clue_winner=1)
 validate_round(
-    round4, clues=clues4, debug=debug)
-validate_round(
     round5, clues=clues5, debug=debug)
+validate_round(
+    round4, clues=clues4, debug=True)
 
 print()
 poem = [
