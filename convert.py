@@ -258,16 +258,16 @@ clues3 = (
 # HUSBAND AND WIFE
 # 0:  122233377799AP
 # 1:  244888TTTQQQQA (248TA) <- should win
-# 2:  3455666JJJJADd
-# 3:  45567899TKKKKA (5689A) 
+# 2:  34455666JJJADd
+# 3:  5567899TJKKKKA (5689A) 
 round4 = [
     '222333 . . .',
     '77799 88844 . . .',
     '2 3 5 A QQQQ . . .',
-    'TTT JJJJ . . .',
-    '55666 . . .',
-    '4 9 . A . KKKK . - .',
-    '456789T . - .',
+    'TTT JJJ . . .',
+    '445566 . . .',
+    '6 9 . A . KKKK . - .',
+    '56789TJ . - .',
     'A . - .',
 ]
 # alt:
