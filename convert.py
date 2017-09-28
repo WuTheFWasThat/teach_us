@@ -288,9 +288,9 @@ clues4 = (
 )
 
 # GRAND VOWS FULFILLED
-# 0:  15 44 7788 QQKK AD (478A) <- should win
-# 1:  2233 8 99TT Q JJJJ
-# 2:  23456 6789T QKAd (245669TQQA) 
+# 0:  1 44 77888 QQKK AD (478A) <- should win
+# 1:  2233 5 99TT K JJJJ
+# 2:  23456 6789T QQAd (245669TQQA) 
 # 3:  23456 567P9T KAA
 
 # A1dP
@@ -305,14 +305,14 @@ round5 = [
     '2233 . . .',
     'T Q K A . . .',
     'D . . .',
-    '5 K A . - .',
+    '8 K A . - .',
     '6789T . - .',
 ]
 clues5 = (
     '1.7 2.5 1.12 2.9 1.3 2.13 2.2 2.14 2.6',
     '2.10 1.8 2.8 2.6 2.13 2.1 2.1 2.5 2.4'
 )
-# REMAIN: 8K
+# REMAIN: 8A
 # blacked out: 23456,Q,Q, JJJJ, 7788, AA
 
 # WINNING PLAYER SHOULD HAVE:
@@ -331,9 +331,9 @@ validate_round(
 validate_round(
    round3, clues=clues3, debug=debug, clue_winner=1)
 validate_round(
-    round5, clues=clues5, debug=debug)
+    round4, clues=clues4, debug=debug)
 validate_round(
-    round4, clues=clues4, debug=True)
+    round5, clues=clues5, debug=debug)
 
 print()
 poem = [
