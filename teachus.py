@@ -4,11 +4,6 @@ def char2num(char):
     assert len(char) == 1
     return ord(char.lower()) - ord('a') + 1
 
-def char2trits(char):
-    num = char2num(char)
-    trits = [num // 9, (num % 9) // 3, num % 3]
-    return trits
-
 def card2num(card):
     if card == 'T':
         return 10
@@ -26,37 +21,46 @@ def card2num(card):
         assert i < 10
         return i
 
-def summod(nums):
-    return ((sum(nums) - 1) % 26) + 1
-
 def num2char(num):
     return chr(ord('a') + num - 1)
 
+class colors:
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    END = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def char2card(x):
+    if x == ' ' or x == ',':
+        return x
+    num = char2num(x)
+    card = (num - 1) % 13 + 1
+    color = colors.RED if num > 13 else colors.GREEN
+    cardstr = str(card)
+    if card == 1:
+        cardstr = 'A'
+    elif card == 10:
+        cardstr = 'T'
+    elif card == 11:
+        cardstr = 'J'
+    elif card == 12:
+        cardstr = 'Q'
+    elif card == 13:
+        cardstr = 'K'
+    return color + cardstr + colors.END
+
+
 def validate_round(round, clues=None, debug=False, verify=False, clue_winner=None):
     card_counts = {
-        '2': 4,
-        '3': 4,
-        '4': 4,
-        '5': 4,
-        '6': 4,
-        '7': 4,
-        '8': 4,
-        '9': 4,
-        'T': 4,
-        'J': 4,
-        'Q': 4,
-        'K': 4,
-        'A': 4,
-        '1': 1,
-        'd': 1,
-        'P': 1,
-        'D': 1,
+        '2': 4, '3': 4, '4': 4, '5': 4, '6': 4, '7': 4, '8': 4, '9': 4,
+        'T': 4, 'J': 4, 'Q': 4, 'K': 4, 'A': 4,
+        '1': 1, 'd': 1, 'P': 1, 'D': 1,
     }
     hands = {
-        0: [],
-        1: [],
-        2: [],
-        3: [],
+        0: [], 1: [], 2: [], 3: [],
     }
 
     player = 0
@@ -82,10 +86,10 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
         for j, play in enumerate(trick.split(' ')):
             assert not trick_done
             expect_true(
-                (play == '-') == (dog or (len(hands[player]) == 14)), 
+                (play == '-') == (dog or (len(hands[player]) == 14)),
                 "Player %d should pass when done: %s %s %s" % (player, play, dog, ''.join(sorted(hands[player])))
             )
-            if dog: 
+            if dog:
                 trick_done = True
                 assert play == '-'
             if play == '-' or play == '.':
@@ -107,7 +111,7 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
                     hands[player].append(card)
                     card_counts[card] -= 1
                     expect_true(
-                        card_counts[card] >= 0, 
+                        card_counts[card] >= 0,
                         "Too many %s" % card
                     )
                     if card == 'd':
@@ -156,7 +160,7 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
         (part1, part2) = clues
         phrase = ''
         for clue in part1.split(' '):
-            assert clue[1] == '.' 
+            assert clue[1] == '.'
             index = int(clue[2:]) - 1
             if clue[0] == '1':
                 phrase += clued_letter(winner, False, index)
@@ -165,7 +169,7 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
 
         phrase += '.'
         for clue in part2.split(' '):
-            assert clue[1] == '.' 
+            assert clue[1] == '.'
             index = int(clue[2:]) - 1
             if clue[0] == '1':
                 phrase += clued_letter((winner + 2) % 4, True, index)
@@ -183,16 +187,12 @@ def validate_round(round, clues=None, debug=False, verify=False, clue_winner=Non
 # - make forced passes for bombs
 # - get rid of passes on last round
 
-res = sys.argv[1]
-nums = [char2num(char) for char in res]
-# print(num2char(summod(nums)))
-
 # TEACH US, IN LIFE
 # 0: 13456789TTQQAD (56789Q)
 # 1: 355668899TTJdP
 # 2: 223356789KKKKA (358AA)
 # 3: 2244477QQJJJAA
-round1 = [ 
+round1 = [
   '3456789 . . .',
   '1 3 A . . .',
   '2233 JJQQ . . .',
@@ -233,16 +233,16 @@ clues2 = (
 # 0: 12444677889TAA
 # 1: 2233599TTJJAQK (259T)
 # 2: 5566788JQQAdDP
-# 3: 23345679TJQKKK (45679TQ) 
+# 3: 23345679TJQKKK (45679TQ)
 
 round3 = [
     '1 A . . .',
-    '2233 5566 . . 99TT . . .', 
+    '2233 5566 . . 99TT . . .',
     '5 7 . 8 Q A . . .',
-    '88 . . JJ QQ . . .', 
-    'JP . . .', 
-    'D . . .', 
-    'd -', 
+    '88 . . JJ QQ . . .',
+    'JP . . .',
+    'D . . .',
+    'd -',
     '444 . - .',
     '6789T . - 9TJQK . . -',
     '234567 . . -',
@@ -259,7 +259,7 @@ clues3 = (
 # 0:  122233377799AP
 # 1:  244888TTTQQQQA (248TA) <- should win
 # 2:  34455666JJJADd
-# 3:  5567899TJKKKKA (5689A) 
+# 3:  5567899TJKKKKA (5689A)
 round4 = [
     '222333 . . .',
     '77799 88844 . . .',
@@ -290,7 +290,7 @@ clues4 = (
 # GRAND VOWS FULFILLED
 # 0:  1 544 7788 QQKK AD (478A) <- should win
 # 1:  2233 8 99TT Q JJJJ
-# 2:  23456 6789T KQAd (245669TQQA) 
+# 2:  23456 6789T KQAd (245669TQQA)
 # 3:  23456 567P9T KAA
 
 # A1dP
@@ -312,16 +312,9 @@ clues5 = (
     '1.7 2.5 1.12 2.9 1.3 2.13 2.2 2.14 2.6',
     '2.10 1.8 2.8 2.6 2.13 2.8 2.8 2.5 2.4'
 )
-# REMAIN: 8A
-# blacked out: 23456,Q,Q, JJJJ, 7788, AA
 
 # WINNING PLAYER SHOULD HAVE:
 # green on left, red on right
-
-    # LUCKY AND SKILLED
-    # 1: (Q3J6)
-    # 3: 
-    # AND WIFE
 
 debug = False
 validate_round(
@@ -345,86 +338,10 @@ poem = [
      # as
     'husband      and   wife',         # dragon, phoenix
      # to have
-    'grand vows         fulfilled',   # jade, pagoda 
+    'grand vows         fulfilled',   # jade, pagoda
 ]
-for line in poem:
-    print(line)
-    print(' '.join(str(char2num(x)) for x in line))
-
-class colors:
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    END = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-def char2card(x):
-    if x == ' ' or x == ',':
-        return x
-    num = char2num(x)
-    card = (num - 1) % 13 + 1
-    color = colors.RED if num > 13 else colors.GREEN
-    cardstr = str(card)
-    if card == 1:
-        cardstr = 'A'
-    elif card == 10:
-        cardstr = 'T'
-    elif card == 11:
-        cardstr = 'J'
-    elif card == 12:
-        cardstr = 'Q'
-    elif card == 13:
-        cardstr = 'K'
-    return color + cardstr + colors.END
-
 
 for line in poem:
     print(line)
     print(''.join(char2card(x) for x in line))
-
-# MECHANICS (meh):
-#   sum of lead numbers mod 26 (mahjong)
-#   num passes in trinary (dog)
-#   permutation of suits of numbers (phoenix)
-#   winning numbers (dragon)
-
-"""
-[0, 1, 2, 3] = A
-[0, 1, 3, 2] = B
-[0, 2, 1, 3] = C
-[0, 2, 3, 1] = D
-[0, 3, 1, 2] = E
-[0, 3, 2, 1] = F
-[1, 0, 2, 3] = G
-[1, 0, 3, 2] = H
-[1, 2, 0, 3] = I
-[1, 2, 3, 0] = J
-[1, 3, 0, 2] = K
-[1, 3, 2, 0] = L
-[2, 0, 1, 3] = M
-[2, 0, 3, 1] = N
-[2, 1, 0, 3] = O
-[2, 1, 3, 0] = P
-[2, 3, 0, 1] = Q
-[2, 3, 1, 0] = R
-[3, 0, 1, 2] = S
-[3, 0, 2, 1] = T
-[3, 1, 0, 2] = U
-[3, 1, 2, 0] = V
-[3, 2, 0, 1] = W
-[3, 2, 1, 0] = X
-"""
-
-# for i in 'abcdefghijklmnopqrstuvwxyz':
-#     print(char2trits(i))
-
-"""
-
-1: 3459JQ
-2: 68QA
-
-1: 3459JQ
-2: 68QA
-"""
+    # print(' '.join(str(char2num(x)) for x in line))

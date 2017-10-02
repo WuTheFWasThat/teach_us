@@ -1,15 +1,15 @@
 body {
   font-family: monospace;
+  padding: 50;
+}
+.center {
   text-align: center;
-  padding-top: 50;
-  padding-bottom: 50;
 }
 .title {
-  height: 100; 
   font-size: 50;
 }
 table {
-  margin-left:auto; 
+  margin-left:auto;
   margin-right:auto;
 }
 .log {
