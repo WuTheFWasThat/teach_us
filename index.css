@@ -20,6 +20,8 @@ table {
 }
 .log > div {
   width: max-content;
+  width: -moz-max-content;    /* Firefox/Gecko */
+  width: -webkit-max-content; /* Chrome */
   text-align: center;
   margin-left: auto;
   margin-right: auto;
