@@ -45,41 +45,52 @@
     <h2>
       Round 1
     </h2>
+    <div style='width: 100%;'>
+    <p>
+    The text is given away by the first line of the poem, so
+    this round is to help teach you the basic mechanic.
+    Each hand/number pair encodes a letter; the main puzzle is to discover the encoding scheme.
+    </p>
+
+    <p>
+    First, notice that the number is always in the range 1-14.
+    Since a Tichu hand consists of 14 cards, this suggests that the numbers correspond to indices within a hand.
+    Indexing gives a card, and we can associate (non-special) cards with the numbers 1-13.
+    The image hand direction will give another bit, together making for 26 possibilities.
+    </p>
+
+    <p>
+    Given the information presented, the most natural indexing scheme is order of play.
+    However, it's not clear in which of the four hands we should index.
+    </p>
+
+    <p>
+    Knowing the clued phrase, some experimentation yields:
+    <ul>
+      <li>
+      When the hand image points up, we should index into the hand of the first player who went out (player 3).
+      </li>
+      <li>
+      When the hand image points down, we should index into the hand of their partner (third to go out, player 1).
+      </li>
+      <li>
+      On the top row, a hand pointing down means second half of alphabet.
+      </li>
+      <li>
+      On the bottom row, a hand pointing up means second half of alphabet.
+      </li>
+    </ul>
+    This fully specifies a way to extract a letter.
+    For example, on the top row, we had a 5 and a downwards-facing hand.
+    This means to look at the 5th card played by player 1, which was a 7.
+    A downwards-facing hand on the top row means to add 13, yielding 20.
+    The 20th letter of the alphabet is T.
+    </p>
+    <p>
+    Continuing along these lines, one gets:
+    </p>
+    </div>
     <table>
-      <tr><td colspan="999">
-        <div style='width: 100%;'>
-        <p>
-        The text is given away by the first line of the poem, so
-        this round is to help teach you the basic mechanic.
-        Each hand/number pair encodes a letter; the main puzzle is to discover the encoding scheme.
-        </p>
-
-        <p>
-        First, notice that the number is always in the range 1-14.
-        Since a Tichu hand consists of 14 cards, this suggests that the numbers correspond to indices within a hand.
-        Indexing gives a card, and we can associate (non-special) cards with the numbers 1-13.
-        The image hand direction will give another bit, together making for 26 possibilities.
-        </p>
-
-        <p>
-        Given the information presented, the most natural indexing scheme is order of play.
-        However, it's not clear in which of the four hands we should index.
-        </p>
-
-        <p>
-        Knowing the clued phrase, some experimentation yields:
-        <ul>
-          <li>
-          When the hand image points up, we should index into the hand of the first player who went out.
-          </li>
-          <li>
-          When the hand image points down, we should index into the hand of their partner (third to go out).
-          </li>
-        </ul>
-        </p>
-
-        </div>
-      </td></tr>
       <tr><td><table>
       <tr>
         <th>T</th>
@@ -127,6 +138,9 @@
     <h2>
       Round 2
     </h2>
+    <div style='width: 100%;'>
+      This round was mainly to make sure the solver could execute the mechanic.
+    </div>
     <table>
       <tr>
         <td class="clue marker">
@@ -154,23 +168,6 @@
           <td class="hand1">6</td>
         </tr></table></td>
       </tr>
-      <tr><td class="log" colspan="999">
-        <div>
-        <p>
-        1(3)P(2)3456789TJQKA . . .<br/>
-        - 3 5 8 - . J A - . . <br/>
-        4 - 8 Q . - K A . - .<br/>
-        44 . - 55 99 QQ - . .<br/>
-        77733 - TTTJJ 2222 . - .<br/>
-        d -<br/>
-        - 666 . . - <br/>
-        D . . -<br/>
-        - 8<br/>
-        </p>
-        100+T <b>300</b>
-        0 <b>0</b>
-        </div>
-      </td></tr>
     </table>
 
     <h2>
